@@ -13,18 +13,5 @@ class MergerRepositoryTest {
     @Test
     void test1() {
 
-        MenuComponent allMenus = new Menu("ALL MENUS", "ALL menus combined");
-
-        allMenus.add(new DinerMenu("DINER MENU", "Lunch"));
-        allMenus.add(new PancakeHouseMenu("PANCAKE HOUSE MENU","Breakfast"));
-
-
-
-    }
-
-    while(iterator.hasNext()){
-        MenuComponent menuComponent = iterator.next();
-
-        System.out.println(menuComponent.getName());
     }
 }

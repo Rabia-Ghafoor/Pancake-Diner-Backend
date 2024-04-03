@@ -1,29 +1,71 @@
 package edu.iu.habahram.DinerPancakeHouseMerge.repository;
-
-
-import edu.iu.habahram.DinerPancakeHouseMerge.model.DinerMenu;
-import edu.iu.habahram.DinerPancakeHouseMerge.model.MenuItemRecord;
-import edu.iu.habahram.DinerPancakeHouseMerge.model.PancakeHouseMenu;
+import edu.iu.habahram.DinerPancakeHouseMerge.model.*;
 import org.springframework.stereotype.Repository;
 
-import java.awt.*;
-import java.util.Arrays;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+
 
 @Repository
-    public class MergerRepository {
-        public  List< MenuItemRecord> getTheMenuItems() {
-            MenuComponent allMenus = new Menu("ALL MENUS", "All menus combined");
-            allMenus.add(new DinerMenu("DINER MENU", "Lunch"));
-            allMenus.add(new PancakeHouseMenu("PANCAKE HOUSE MENU", "Breakfast"));
-            allMenus.add(new CafeMenu("CAFE MENU", "Dinner"));
-            MenuItem[] menuItems = allMenus.getItems();
+public class MergerRepository {
 
-            List<MenuItemRecord> records = Arrays.stream(menuItems)
-                    .map(x -> new MenuItemRecord(x.getName(),
-                            x.getDescription(),
-                            x.isVegetarian(),
-                            x.getPrice())).toList();
-            return records;
+    public List<MenuItemRecord> getTheMenuItems() {
+        Iterator<MenuComponent> iterator = getTheMenuIterator();
+
+        List<MenuItemRecord> records = new ArrayList<>();
+
+        while(iterator.hasNext()){
+            MenuComponent menuComponent = iterator.next();
+            if(menuComponent.getName()=="DINER MENU"){
+                DinerMenu dinerMenu = (DinerMenu) menuComponent;
+                Iterator<MenuItem> items = dinerMenu.createIterator();
+                while(items.hasNext()){
+                    MenuItem item = items.next();
+                    MenuItemRecord menuItemRecord = new MenuItemRecord(item.getName(),
+                            item.getDescription(),
+                            item.isVegetarian(),
+                            item.getPrice());
+
+                    records.add(menuItemRecord);
+                }
+            }
+            else if(menuComponent.getName()=="PANCAKE HOUSE MENU"){
+                BreakfastMenu breakfastMenu = (BreakfastMenu) menuComponent;
+                Iterator<MenuItem> items = breakfastMenu.createIterator();
+                while(items.hasNext()){
+                    MenuItem item = items.next();
+                    MenuItemRecord menuItemRecord = new MenuItemRecord(item.getName(),
+                            item.getDescription(),
+                            item.isVegetarian(),
+                            item.getPrice());
+
+                    records.add(menuItemRecord);
+                }
+            }
+            else if(menuComponent.getName()=="CAFE MENU"){
+                VegetarianMenu vegetarianMenu = (VegetarianMenu) menuComponent;
+                Iterator<MenuItem> items = vegetarianMenu.createIterator();
+                while(items.hasNext()){
+                    MenuItem item = items.next();
+                    MenuItemRecord menuItemRecord = new MenuItemRecord(item.getName(),
+                            item.getDescription(),
+                            item.isVegetarian(),
+                            item.getPrice());
+
+                    records.add(menuItemRecord);
+                }
+            }
         }
+        return records;
     }
 
+    public Iterator<MenuComponent> getTheMenuIterator() {
+        MenuComponent allMenus = new Menu("ALL MENUS", "All menus combined");
+
+        allMenus.add(new DinerMenu("DINER MENU", "Lunch"));
+        allMenus.add(new BreakfastMenu("PANCAKE HOUSE MENU", "Breakfast"));
+        allMenus.add(new VegetarianMenu("CAFE MENU", "Dinner"));
+        return allMenus.createIterator();
+    }
+}

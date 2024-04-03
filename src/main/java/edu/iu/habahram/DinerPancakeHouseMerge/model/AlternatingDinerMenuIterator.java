@@ -17,7 +17,7 @@ public class AlternatingDinerMenuIterator implements Iterator<MenuItem> {
     }
     public MenuItem next() {
         MenuItem menuItem = items[position];
-        position = //TODO
+        position = position + 2;
         return menuItem;
     }
     public boolean hasNext() {

@@ -4,5 +4,6 @@ package edu.iu.habahram.DinerPancakeHouseMerge.model;
                                  String description,
                                  boolean vegetarian,
                                  double price) {
+
     }
 

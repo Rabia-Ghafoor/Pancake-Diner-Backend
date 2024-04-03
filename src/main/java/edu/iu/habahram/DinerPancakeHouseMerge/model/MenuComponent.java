@@ -1,4 +1,6 @@
-import edu.iu.habahram.DinerPancakeHouseMerge.model.MenuItem;
+package edu.iu.habahram.DinerPancakeHouseMerge.model;
+
+import java.util.Iterator;
 
 public abstract class MenuComponent {
     public void add( MenuComponent menuComponent) {
@@ -22,10 +24,11 @@ public abstract class MenuComponent {
         }
         public boolean isVegetarian() {
             throw new UnsupportedOperationException();
-
         }
 
         public MenuItem [] getItems() {
             throw new UnsupportedOperationException();
         }
+
+        public abstract Iterator<MenuComponent> createIterator();
 }
